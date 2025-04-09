@@ -1,3 +1,6 @@
+import './Animations.css'
+
+
 export function TypingEffect(){
   return(<p id="typing" className="typed-[FIND;CREATE;EXPLORE;ANYTHING_TOURNAMENTS...] typed-caret" 
     style={{
