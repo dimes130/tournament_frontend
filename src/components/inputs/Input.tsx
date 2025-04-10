@@ -47,7 +47,6 @@ export function RoleInput({ name, inputRef }: RoleProp){
 
   return (
     <fieldset className="fieldset">
-      <legend className="fieldset-legend">What is your role?</legend>
       <select 
         className="select"
         name = { name }
