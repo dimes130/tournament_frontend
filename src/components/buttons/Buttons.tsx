@@ -29,11 +29,18 @@ export function GetStarted() {
 
 
 export function DarkModeSwitch(){
-  
+
     const setTheme = () =>  {
       const prev = document.documentElement.getAttribute("data-theme");
-      if(prev == "emerald"){ document.documentElement.setAttribute("data-theme", "coffee"); }
-      else { document.documentElement.setAttribute("data-theme", "emerald"); }
+      if(prev == "emerald"){ 
+        document.documentElement.setAttribute("data-theme", "coffee");
+        localStorage.setItem("darkmode", "coffee");
+      }
+      else { 
+        document.documentElement.setAttribute("data-theme", "emerald");
+        localStorage.setItem("darkmode", "emerald");
+       }
+       console.log(localStorage.getItem("darkmode"));
     }
 
     return (<label id = "dms" className="flex cursor-pointer gap-2">

@@ -5,8 +5,11 @@ import Home from './pages/home/Home.tsx'
 import SignUp from './pages/signup/SignUp.tsx'
 import { createBrowserRouter,  RouterProvider } from 'react-router'
 import Login from './pages/Login/Login.tsx'
+import { getLiveTheme } from './components/helper.tsx'
 
-document.documentElement.setAttribute("data-theme", "emerald");
+//set theme based on local storage
+
+getLiveTheme();
 
 const router = createBrowserRouter([
   {path: "/", element: <Home/>},
