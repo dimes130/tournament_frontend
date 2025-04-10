@@ -133,3 +133,41 @@ export function SignUpForm(){
 
         );
 }
+
+
+export function LoginForm(){
+
+  const usernameRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    console.log([...formData.entries()]);
+
+  };
+
+
+return(
+  <form onSubmit= { handleSubmit }>   
+
+      <fieldset className="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
+  <legend className="fieldset-legend">Login</legend>
+  
+  {/* Username Input */}
+  <label className="fieldset-label">Username</label>
+  <UsernameField name = "username" inputRef = {usernameRef} ></UsernameField>
+  
+  {/* Password Input */}
+  <label className="fieldset-label">Password</label>
+  <PasswordField name = "password" inputRef= { passwordRef }></PasswordField>
+  
+  <button type="submit" className="btn btn-neutral mt-4">Login</button>
+      </fieldset>
+  </form>
+
+  );
+}

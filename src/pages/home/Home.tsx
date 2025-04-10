@@ -4,6 +4,8 @@ import { TypingEffect } from '../../components/animations/Animations';
 
 function Home() {
 
+  
+  
   return (
     <>
 
