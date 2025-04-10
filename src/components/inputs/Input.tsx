@@ -68,7 +68,7 @@ export function DOB({ name, inputRef }: SignupProps){
 }
 
 
-export function SignUp(){
+export function SignUpForm(){
 
         const usernameRef = useRef<HTMLInputElement | null>(null);
         const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -107,7 +107,7 @@ export function SignUp(){
         <form onSubmit= { handleSubmit }>   
 
             <fieldset className="fieldset w-xs bg-base-200 border border-base-300 p-4 rounded-box">
-        <legend className="fieldset-legend">Login</legend>
+        <legend className="fieldset-legend">Sign Up</legend>
         
         {/* Role Input */}
         <label className="fieldset-label">Role</label>

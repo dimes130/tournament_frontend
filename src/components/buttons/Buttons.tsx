@@ -17,8 +17,13 @@ export function LoginButton(){
 }
 
 export function GetStarted() {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate("/signup"); // Change to your route path
+      };
     return (
-        <button id="get-started" className="btn btn-neutral btn-xl">Get Started</button>
+        <button id="get-started" onClick={ handleClick } className="btn btn-neutral btn-xl">Get Started</button>
     );
   }  
 
