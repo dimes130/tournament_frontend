@@ -1,6 +1,7 @@
 import './Input.css'
-import { useRef, Fragment } from "react";
+import { useRef, Fragment, use } from "react";
 import { calculateYearsDifference } from '../helper';
+import { useNavigate } from 'react-router-dom';
 
 
 interface SignupProps {
@@ -69,17 +70,17 @@ export function DOB({ name, inputRef }: SignupProps){
 
 
 export function SignUpForm(){
+        const navigate = useNavigate();
 
         const usernameRef = useRef<HTMLInputElement | null>(null);
         const passwordRef = useRef<HTMLInputElement | null>(null);
         const roleRef = useRef<HTMLSelectElement | null>(null);
         const dobRef = useRef<HTMLInputElement | null>(null);
 
-        const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           
           e.preventDefault();
 
-          //
           if (!dobRef.current) {
             console.error("Date of Birth input is not available.");
             return;
@@ -95,10 +96,29 @@ export function SignUpForm(){
         }
 
           const formData = new FormData(e.currentTarget);
+          const role = formData.get("role");
+          const username = formData.get("username");
+          const password = formData.get("password");
 
-          formData.append('age', String(age));
 
-          console.log([...formData.entries()]);
+          const res = await fetch("http://localhost:8080/auth/signup",{
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({role, username, password})
+          });
+          
+          const data = await res.json()
+
+          if(res.ok){
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("role", data.role);
+      
+            navigate(`/${data.role}/${data.id}/dashboard`);
+          }
+
+          else{
+            console.log("error with login");
+          }
 
         };
 
@@ -136,17 +156,37 @@ export function SignUpForm(){
 
 
 export function LoginForm(){
+  const navigate = useNavigate();
 
   const usernameRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+    const username = formData.get("username");
+    const password = formData.get("password");
 
-    console.log([...formData.entries()]);
+    const res = await fetch("http://localhost:8080/auth/login",{
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({username, password})
+    });
+    
+    const data = await res.json()
+    console.log(data.id);
+    if(res.ok){
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+      
+      navigate(`/${data.role}/${data.id}/dashboard`);
+    }
+
+    else{
+      console.log("error with login");
+    }
 
   };
 
