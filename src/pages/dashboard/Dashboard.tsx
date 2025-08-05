@@ -1,7 +1,49 @@
-
+import { useEffect, useState } from 'react'
+import DisplayTeams from '../../components/data_display/DataDisplay';
+import { useParams } from 'react-router';
+import { Team } from '../../apis/Entities';
 
 function Dashboard(){
-    return(<h1>hello world</h1>)
-}
+    const [data, setData] = useState<Team[]>([]);
+    const [loading, setLoading] = useState(true);
+    const { coach_id } = useParams();
+
+    useEffect(() => {
+        if (!coach_id) return;
+        const fetchDashboard = async() =>  {
+        try{
+        const res = await fetch(`http://localhost:8080/api/v1/coach/${coach_id}/dashboard`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"}
+          })
+          const json = await res.json();
+
+          if(res.ok){
+           setData(json); 
+          }
+
+          setLoading(false);
+
+        }
+
+        catch(error){
+            console.log(error);
+        }
+        }
+        fetchDashboard();
+        }, []);
+
+
+        return (
+  <div className="space-y-4 p-6">
+    {data.map(team => (
+      <DisplayTeams key={team.team_id} team={team} />
+    ))}
+  </div>
+);
+;
+
+
+    }
 
 export default Dashboard;
