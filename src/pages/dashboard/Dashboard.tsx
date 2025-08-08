@@ -12,9 +12,12 @@ function Dashboard(){
         if (!coach_id) return;
         const fetchDashboard = async() =>  {
         try{
+        const token = localStorage.getItem('token');
         const res = await fetch(`http://localhost:8080/api/v1/coach/${coach_id}/dashboard`, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"}
+            method: "GET",
+            headers: {"Content-Type": "application/json",
+              "Authorization" : `Bearer ${token}`
+            }
           })
           const json = await res.json();
 
@@ -35,13 +38,12 @@ function Dashboard(){
 
 
         return (
-  <div className="space-y-4 p-6">
-    {data.map(team => (
-      <DisplayTeams key={team.team_id} team={team} />
-    ))}
-  </div>
-);
-;
+        <div className="space-y-4 p-6">
+          {data.map(team => (
+            <DisplayTeams key={team.team_id} team={team} />
+          ))}
+        </div>
+        );
 
 
     }
