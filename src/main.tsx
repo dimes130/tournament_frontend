@@ -7,6 +7,7 @@ import { createBrowserRouter,  RouterProvider } from 'react-router'
 import Login from './pages/Login/Login.tsx'
 import { getLiveTheme } from './components/helper.tsx'
 import Dashboard from './pages/dashboard/Dashboard.tsx'
+import { CanvasPage } from './pages/Canvas/canvas.tsx'
 
 //set theme based on local storage
 
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
   {path: "/home", element: <Home/>},
   {path: "/signup", element: <SignUp/>},
   {path: "/login", element: <Login/>},
-  {path: "/coach/:coach_id/dashboard", element: <Dashboard/>}
+  {path: "/coach/:coach_id/dashboard", element: <Dashboard/>},
+  {path: "/canvas", element: <CanvasPage/>}
 ]);
 
 createRoot(document.getElementById('root')!).render(

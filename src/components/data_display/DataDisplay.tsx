@@ -1,9 +1,14 @@
-import { useEffect } from "react";
-import { Team } from "../../apis/Entities";
-
+import { Team, Coach } from "../../apis/Entities";
+import { calculateYearsDifference } from "../helper";
+import { useRef } from "react";
+import basketballBg from "../../assets/basketball_canvas.png"; // default import — correct
 
 interface DisplayTeamProp {
     team : Team;
+}
+
+interface DisplayCoachProp{
+  coach: Coach;
 }
 
 export function DisplayTeams({ team }: DisplayTeamProp){
@@ -62,9 +67,48 @@ export function DisplayTeams({ team }: DisplayTeamProp){
 
     </button>
   </div>
-</div>) 
-
-
+</div>);
 }
 
-export default DisplayTeams;
+export function DisplayCoachDetails( {coach} : DisplayCoachProp){
+  const age = calculateYearsDifference(new Date(coach.dateOfBirth), new Date());
+
+  return(<div className="stats stats-vertical shadow">
+    <div className="stat">
+      <div className="stat-title">Welcome Back</div>
+      <div className="stat-value">Coach {coach.name}</div>
+    </div>
+
+    <div className="stat">
+      <div className="stat-title">Age</div>
+      <div className="stat-value">{ age }</div>
+    </div>
+
+    <div className="stat">
+      <div className="stat-title">Teams Managed</div>
+      <div className="stat-value">{ coach.teams.length }</div>
+    </div>
+</div>)
+}
+
+export default function PlayCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "1200px",
+        height: "712px",
+        backgroundImage: `url(${basketballBg})`,
+        backgroundSize: "cover",
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        width={600 * 2}
+        height={356 * 2}
+        style={{ position: "absolute", top: 0, left: 0, border: "2px solid black"}}
+      />
+    </div>
+  );
+}

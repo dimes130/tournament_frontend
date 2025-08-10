@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import DisplayTeams from '../../components/data_display/DataDisplay';
+import { Fragment, useEffect, useState } from 'react'
+import { DisplayTeams, DisplayCoachDetails} from '../../components/data_display/DataDisplay';
 import { useParams } from 'react-router';
 import { Team } from '../../apis/Entities';
 
