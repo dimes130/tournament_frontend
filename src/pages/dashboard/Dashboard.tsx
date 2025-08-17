@@ -25,8 +25,6 @@ function Dashboard(){
            setData(json); 
           }
 
-          setLoading(false);
-
         }
 
         catch(error){

@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import './Buttons.css'
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { PlayType } from '../../apis/Entities';
 //assets
 
 
@@ -73,3 +75,47 @@ export function DarkModeSwitch(){
       </svg>
     </label>);
   }
+
+export interface CreatePlayRequest{
+    name : string;
+    playType : PlayType;
+}
+
+export type CreatePlayProp = {
+  play : CreatePlayRequest
+}
+
+export function StartPlayButton(c: CreatePlayProp) {
+  const { team_id } = useParams();
+
+  const createPlay = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(
+        `http://localhost:8080/api/v1/team/${team_id}/plays/create`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(c.play),
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to create play");
+      console.log("Play created!");
+
+      const json = await res.json();
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <button onClick={createPlay} className="btn btn-success">
+      Start Play
+    </button>
+  );
+}

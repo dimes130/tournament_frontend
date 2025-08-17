@@ -1,8 +1,9 @@
 import './Input.css'
-import { useRef, Fragment, use } from "react";
+import { useRef, Fragment, useState } from "react";
 import { calculateYearsDifference } from '../helper';
 import { useNavigate } from 'react-router-dom';
-
+import { CreatePlayRequest, CreatePlayProp, StartPlayButton } from '../buttons/Buttons';
+import { PlayType } from '../../apis/Entities';
 
 interface SignupProps {
     name: string;
@@ -209,5 +210,82 @@ return(
       </fieldset>
   </form>
 
+  );
+}
+
+export function CreatePlayModal() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [name, setName] = useState("");
+  const [playType, setPlayType] = useState<PlayType>("");
+
+  return (
+    <>
+      {/* Open Modal Button */}
+      <button className="btn btn-primary" onClick={() => setIsOpen(true)}>
+        Create Play
+      </button>
+
+      {/* Modal */}
+      {isOpen && (
+        <dialog className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">New Play</h3>
+
+            <div className="space-y-4">
+              {/* Play Name */}
+              <div>
+                <label className="label">
+                  <span className="label-text">Play Name</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter play name"
+                  className="input input-bordered w-full"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+
+              {/* Play Type */}
+              <div>
+                <label className="label">
+                  <span className="label-text">Play Type</span>
+                </label>
+                <select
+                  className="select select-bordered w-full"
+                  value={playType}
+                  onChange={(e) => setPlayType(e.target.value as PlayType)}
+                  required
+                >
+                  <option value="" disabled>
+                    Select type
+                  </option>
+                  <option value="OFFENSE">Offense</option>
+                  <option value="DEFENSE">Defense</option>
+                </select>
+              </div>
+
+              {/* Actions */}
+              <div className="modal-action">
+                <StartPlayButton
+                  play={{
+                    name,
+                    playType,
+                  }}
+                />
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </dialog>
+      )}
+    </>
   );
 }

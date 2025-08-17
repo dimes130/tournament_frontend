@@ -22,7 +22,7 @@ export interface Team {
   plays: Play[];
 }
 
-export type PlayType = 'OFFENSE' | 'DEFENSE';
+export type PlayType = 'OFFENSE' | 'DEFENSE'| '';
 
 export interface Play {
     play_id : number;
