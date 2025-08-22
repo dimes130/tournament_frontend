@@ -1,14 +1,16 @@
 import { Fragment, useEffect, useState } from 'react'
 import { DisplayTeamDetails} from '../../components/data_display/DataDisplay';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { Play } from '../../apis/Entities';
 import { StartPlayButton } from '../../components/buttons/Buttons';
 import { CreatePlayModal } from '../../components/inputs/Input';
+
 
 export default function TeamDashboard(){
     const [data, setData] = useState<Play[]>([]);
     const [loading, setLoading] = useState(true);
     const { team_id } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!team_id) return;

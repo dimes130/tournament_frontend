@@ -7,7 +7,7 @@ import { createBrowserRouter,  RouterProvider } from 'react-router'
 import Login from './pages/Login/Login.tsx'
 import { getLiveTheme } from './components/helper.tsx'
 import Dashboard from './pages/dashboard/Dashboard.tsx'
-import { CanvasPage } from './pages/Canvas/canvas.tsx'
+import { CanvasPage } from './pages/EditPlay/EditPlay.tsx'
 import TeamDashboard from './pages/TeamDashboard/TeamDashboard.tsx'
 
 //set theme based on local storage
@@ -20,12 +20,9 @@ const router = createBrowserRouter([
   {path: "/signup", element: <SignUp/>},
   {path: "/login", element: <Login/>},
   {path: "/coach/:coach_id/dashboard", element: <Dashboard/>},
-  {path: "/coach/:coach_id/teams/:team_id/plays", element: <TeamDashboard/>,
-    children:[
-      {path: "create", element: <CanvasPage/>}
-    ]
-  }
-]);
+  {path: "/coach/:coach_id/teams/:team_id/plays", element: <TeamDashboard/>},
+  {path: "/coach/:coach_id/teams/:team_id/plays/create/:play_id", element: <CanvasPage/>}
+    ]);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
